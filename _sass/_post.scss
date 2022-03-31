@@ -133,8 +133,8 @@
 	> p 
 	{
 		margin: 0;
-		padding-top: $spacing-full - 15;
-		padding-bottom: $spacing-full - 15;
+		padding-top: 10px;
+		padding-bottom: 2px;
 	}
 	
 	ul.task-list 
@@ -198,19 +198,22 @@
 	
 	h1 
 	{
-		@include relative-font-size(1.5);
+		@include relative-font-size(2);
+		border-bottom: 1px solid $light;
+		margin-top: 10px;
 	}
 	
 	h2 
 	{
-		@include relative-font-size(1.375);
+		@include relative-font-size(1.7);
+		border-bottom: 1px solid $light;
+		margin-top: 10px;
 	}
 	
 	h3 
 	{
-		@include relative-font-size(1.25);
-		border-bottom: 1px solid $light;
-		padding-bottom: 4px;
+		@include relative-font-size(1.35);
+		margin-top: 5px;
 	}
 	
 	h4 
@@ -220,12 +223,12 @@
 	
 	h5 
 	{
-		@include relative-font-size(1);
+		@include relative-font-size(1.1);
 	}
 	
 	h6 
 	{
-		@include relative-font-size(0.875);
+		@include relative-font-size(1);
 	}
 }
 
