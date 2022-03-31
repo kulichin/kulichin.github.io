@@ -170,24 +170,6 @@ figcaption {
   text-align: center;
 }
 
-// List
-ul {
-  list-style: none;
-  li {
-    display: list-item;
-    text-align: -webkit-match-parent;
-  }
-  li::before {
-    content: "\FE63";
-    display: inline-block;
-    top: -1px;
-    width: 1.2em;
-    position: relative;
-    margin-left: -1.3em;
-    font-weight: 700;
-  }
-}
-
 ol {
   list-style: none;
   counter-reset: li;
@@ -206,6 +188,20 @@ ol {
       font-size: $small-font-size;
     }
   }
+}
+
+// Dots for List
+ul.dash {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 1em;
+}
+
+ul.dash > li:before {
+    display: inline-block;
+    content: "-";
+    width: 1em;
+    margin-left: -1em;
 }
 
 ul,
@@ -249,7 +245,15 @@ h6 {
 }
 
 // Headings with link
-h1 > a,
+h1 > a {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 50px;
+  height: 2px;
+  background-color: green;
+}
+
 h2 > a,
 h3 > a,
 h4 > a,
