@@ -74,7 +74,7 @@ By Default, two joysticks are provided. You can override that to use none or onl
 bool AMyCharacter::EnableTouchscreenMovement(class UInputComponent* InputComponent)
 {
 	bool bResult = false;
-	if(FPlatformMisc::GetUseVirtualJoysticks() || GetDefault<UInputSettings>()->bUseMouseForTouch )
+	if(FPlatformMisc::GetUseVirtualJoysticks() || GetDefault<UInputSettings>()->bUseMouseForTouch)
 	{
 		bResult = true;
 		InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AMyCharacter::BeginTouch);
