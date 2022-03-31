@@ -3,8 +3,6 @@ title: Unreal Engine - C++ Architecture
 date: 2022-03-31 11:58:47 +07:00
 ---
 
-- [Assertions](#Assertions)
-
 # Assertions
 
 Reporting errors and don't halt the execution. Works in all builds. Useful when you want runtime code verification but you’re handling the error case anyway (for example: handle errors through debugger or logs). In shipping work with: bUseLoggingInShipping = true;

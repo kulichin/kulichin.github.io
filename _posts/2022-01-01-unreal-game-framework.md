@@ -3,8 +3,6 @@ title: Unreal Engine - Game Framework
 date: 2022-03-31 11:58:47 +07:00
 ---
 
-# TODO: make sections list
-
 # Game Flow Diagram
 ![GameFlowChart](/assets/img/posts/GameFlowChart.png)
 
