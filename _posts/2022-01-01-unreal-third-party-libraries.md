@@ -91,12 +91,13 @@ There is no way to change the paths in which dlopen searches at runtime, so all 
 All Unreal Engine (UE) modules will be dlopened as RTLD_LAZY | RTLD_LOCAL, while non-UE modules will all be first loaded as LAZY | LOCAL then re-opened as LAZY | RTLD_GLOBAL. This can cause specific issues where multiple UE modules have the same global symbol in which they will link to their local symbol versus a single global one, leading to odd crashes where global systems seem uninitialized. You can use gdb to print out locations it thinks it has stored versus the pointer you have of the global. If they are different, you most likely have multiple global definitions and modules binding to different ones.
 
 ### Debugging SO Loading Problems
-| Tool     | Linux Manual Page                                   | Brief Description                                                                             |
-| ---------| --------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| ldd      | http://man7.org/linux/man-pages/man1/ldd.1.html     | This will tell you runtime dependencies, and possibly any missing dependencies.               |
-| nm       | http://man7.org/linux/man-pages/man1/nm.1p.html     | This is similar to "Dependency Walker", which can tell you about exported symbols (and if needed, all symbols).  |
-| readelf  | http://man7.org/linux/man-pages/man1/readelf.1.html | Another tool to dump info about exported symbols and elf section offsets, among other things. |
-| LD_DEBUG | http://man7.org/linux/man-pages/man8/ld.so.8.html   | Another way to figure out which symbols are being bound to which dynamic library.             |
+
+| Tool     | Linux Manual Page                                   | Brief Description                                                                                                                                   |
+| ---------| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------|
+| ldd      | http://man7.org/linux/man-pages/man1/ldd.1.html     | This will tell you runtime dependencies, and possibly any missing dependencies.                                                                     |
+| nm       | http://man7.org/linux/man-pages/man1/nm.1p.html     | This is similar to "Dependency Walker", which can tell you about exported symbols (and if needed, all symbols).                                     |
+| readelf  | http://man7.org/linux/man-pages/man1/readelf.1.html | Another tool to dump info about exported symbols and elf section offsets, among other things.                                                       |
+| LD_DEBUG | http://man7.org/linux/man-pages/man8/ld.so.8.html   | Another way to figure out which symbols are being bound to which dynamic library.                                                                   |
 | strace   | http://man7.org/linux/man-pages/man1/strace.1.html  | This is a great tool to figure out the runtime system calls being used. This can tell which paths are being attempted to open/read from for dlopen. |
 
 # Runtime Dependencies
@@ -109,29 +110,29 @@ This assumes that the DLL already exists in the given directory, and that the pl
 ```c#
 RuntimeDependencies.Add("$(TargetOutputDir)/Foo.dll", Path.Combine(PluginDirectory, "Source/ThirdParty/bin/Foo.dll"));
 ```
-
 Other variables can be used for output paths of the DLL:
-| Variable           | Description                                                     |
-| ------------------ | --------------------------------------------------------------- |
-| $(EngineDir)       | The engine directory                                            |
-| $(ProjectDir)      | Directory containing the project file                           |
-| $(ModuleDir)       | Directory containing the .build.cs file                         |
-| $(PluginDir)       | Directory containing the .uplugin file                          |
+
+| Variable           | Description                                                                                                                                                                  |
+| -------------------| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| $(EngineDir)       | The engine directory                                                                                                                                                         |
+| $(ProjectDir)      | Directory containing the project file                                                                                                                                        |
+| $(ModuleDir)       | Directory containing the .build.cs file                                                                                                                                      |
+| $(PluginDir)       | Directory containing the .uplugin file                                                                                                                                       |
 | $(BinaryOutputDir) | Directory containing the binary that this module is compiled into (for example, the path to the DLL for editor builds, and path to the executable (EXE) for packaged builds) |
-| $(TargetOutputDir) | Directory containing the executable (including in editor builds) |
+| $(TargetOutputDir) | Directory containing the executable (including in editor builds)                                                                                                             |
 
 
 The RuntimeDependencies field is not limited to staging DLLs; you can also use it to inject additional files into the staging process. Those files can be stored in Unreal's PAK files, or kept loose on disk. DLLs are loaded by the operating system, so they can't normally be stored in the PAK file.
 ```c#
 RuntimeDependencies.Add(Path.Combine(PluginDirectory, "Extras/..."), StagedFileType.UFS);
 ```
-
 Possible values for StagedFileType are:
-| Value                       | Description                                                                                                                  |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| StagedFileType.UFS          | Only accessed through Unreal filesystem functions, and may be included in a PAK file.                                        |
-| StagedFileType.NonUFS       | Must be kept as part of the loose filesystem.                                                                                |
-| StagedFileType.DebugNonUFS  | Debug file which must be kept as part of the loose filesystem. Will not be included unless debug files are set to be staged. |
+
+| Value                       | Description                                                                                                                                            |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| StagedFileType.UFS          | Only accessed through Unreal filesystem functions, and may be included in a PAK file.                                                                  |
+| StagedFileType.NonUFS       | Must be kept as part of the loose filesystem.                                                                                                          |
+| StagedFileType.DebugNonUFS  | Debug file which must be kept as part of the loose filesystem. Will not be included unless debug files are set to be staged.                           |
 | StagedFileType.SystemNonUFS | System file which must be kept as part of the loose filesystem. System files are not subject to automatic remapping or renaming by the platform layer. |
 
 # Troubleshooting
