@@ -3,7 +3,7 @@ title: Unreal Engine — Third-Party Libraries
 date: 2022-03-31 11:58:47 +07:00
 ---
 
-**Sources: [Third-Party Libraries](https://docs.unrealengine.com/en-US/ProductionPipelines/BuildTools/UnrealBuildTool/ThirdPartyLibraries/index.html)**
+**Links: [Third-Party Libraries](https://docs.unrealengine.com/en-US/ProductionPipelines/BuildTools/UnrealBuildTool/ThirdPartyLibraries/index.html)**
 
 This document explains how to integrate third-party libraries, including standard patterns for adding libraries, special considerations for dynamic libraries, dependency staging, and helpful information for errors you may encounter while integrating a third-party library into your Unreal project.
 
