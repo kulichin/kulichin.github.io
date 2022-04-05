@@ -1,5 +1,5 @@
 ---
-title: Unreal Engine Notes - C++ Architecture
+title: Unreal Engine — C++ Architecture
 date: 2022-03-31 11:58:47 +07:00
 ---
 
