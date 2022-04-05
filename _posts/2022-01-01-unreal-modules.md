@@ -62,3 +62,10 @@ A shared PCH will only get compiled once, even if multiple modules use it.
 
 UE4 will choose the "highest priority" shared-PCH to use for your.
 - Sorted by how many other modules with a shared PCH it depends on.
+
+## {ModuleName}_API macro
+
+It pastes extern to make entire class or invidual functions to be callable outside of module dll. It is macro so extern can be skipped on monolith (exe only) build where extern is not needed only create security hole.
+```c++
+#define DLLEXPORT __attribute__((visibility("default")))
+```
