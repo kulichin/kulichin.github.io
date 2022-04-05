@@ -5,7 +5,7 @@ date: 2022-03-31 11:58:47 +07:00
 
 **Links: [Coding Standart](https://docs.unrealengine.com/en-US/ProductionPipelines/DevelopmentSetup/CodingStandard/index.html)**
 
-## Contents:
+## Contents
 - [Copyright Notice](#copyright-notice)
 - [Naming Conventions](#naming-conventions)
 - [Portable C++ code](#portable-c-code)

@@ -3,7 +3,7 @@ title: Unreal Engine — Game Framework
 date: 2022-03-31 11:58:47 +07:00
 ---
 
-## Contents:
+## Contents
 - [Game Initialization Diagram](#game-initialization-diagram)
 	- [Initializing from start](#initializing-from-start)
 	- [BeginPlay() initialization](#beginplay-initialization)

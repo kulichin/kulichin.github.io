@@ -9,7 +9,7 @@ This document explains how to integrate third-party libraries, including standar
 
 The Unreal Engine source code includes several third-party libraries, which are stored under UnrealEngine/Engine/Source/ThirdParty/.. This is a convention for engine modules, and not required. When developing plugins that use third-party libraries, it is more convenient to include the third-party software within the plugin directory.
 
-## Contents:
+## Contents
 * [Module Setup](#module-setup)
 * [Dynamic Libraries](#dynamic-libraries)
     * [Windows](#windows)

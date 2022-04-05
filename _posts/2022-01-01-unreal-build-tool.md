@@ -3,7 +3,7 @@ title: Unreal Engine — Unreal Build Tool
 date: 2022-03-31 11:58:47 +07:00
 ---
 
-## Contents:
+## Contents
 * [UInterface](#uinterface)
 	* [Interface Specifiers](#interface-specifiers)
 	* [Determining If a Class Implements Your Interface](#determining-if-a-class-implements-your-interface)
