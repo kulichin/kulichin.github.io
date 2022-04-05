@@ -3,8 +3,9 @@ title: Unreal Engine — Coding Standard
 date: 2022-03-31 11:58:47 +07:00
 ---
 
-**Links:** https://docs.unrealengine.com/en-US/ProductionPipelines/DevelopmentSetup/CodingStandard/index.html
+**Links: [Coding Standart](https://docs.unrealengine.com/en-US/ProductionPipelines/DevelopmentSetup/CodingStandard/index.html)**
 
+## Contents:
 - [Copyright Notice](#copyright-notice)
 - [Naming Conventions](#naming-conventions)
 - [Portable C++ code](#portable-c-code)
@@ -37,7 +38,7 @@ date: 2022-03-31 11:58:47 +07:00
 - [Platform-Specific Code](#platform-specific-code)
 
 # Copyright Notice
-Any source file (.h, .cpp, .xaml, etc.) provided by Epic for distribution must contain a copyright notice as the first line in the file. The format of the notice must exactly match that shown below:
+Any source file (`.h, .cpp, .xaml, etc.`) provided by Epic for distribution must contain a copyright notice as the first line in the file. The format of the notice must exactly match that shown below:
 ```c++
 // Copyright Epic Games, Inc. All Rights Reserved.
 ```
@@ -48,15 +49,15 @@ If this line is missing or not formatted properly, CIS will generate an error an
 * Method names are verbs that describe the method's effect, or describe the return value of a method that has no effect.
 * The first letter of each word in a name (such as type name or variable name) is capitalized, and there is usually no underscore between words. For example, ***Health*** and ***UPrimitiveComponent*** are correct, but not ***lastMouseCoordinates*** or ***delta_coordinates***.
 * Type names are prefixed with an additional upper-case letter to distinguish them from variable names. For example, ***FSkin*** is a type name, and ***Skin*** is an instance of a ***FSkin***.
-  * Template classes are prefixed by T.
-  * Classes that inherit from UObject are prefixed by U.
-  * Classes that inherit from AActor are prefixed by A.
-  * Classes that inherit from SWidget are prefixed by S.
-  * Classes that are abstract interfaces are prefixed by I.
-  * Enums are prefixed by E.
-  * Boolean variables must be prefixed by b (for example, bPendingDestruction, or bHasFadedIn).
-  * Most other classes are prefixed by F, though some subsystems use other letters.
-  * Typedefs should be prefixed by whatever is appropriate for that type: F if it's a typedef of a struct, U if it's a typedef of a UObject and so on.
+  * Template classes are prefixed by `T`.
+  * Classes that inherit from UObject are prefixed by `U`.
+  * Classes that inherit from AActor are prefixed by `A`.
+  * Classes that inherit from SWidget are prefixed by `S`.
+  * Classes that are abstract interfaces are prefixed by `I`.
+  * Enums are prefixed by `E`.
+  * Boolean variables must be prefixed by `b` (for example, `bPendingDestruction`, or `bHasFadedIn`).
+  * Most other classes are prefixed by `F`, though some subsystems use other letters.
+  * Typedefs should be prefixed by whatever is appropriate for that type: `F` if it's a typedef of a struct, `U` if it's a typedef of a `UObject` and so on.
     * A typedef of a particular template instantiation is no longer a template, and should be prefixed accordingly, for example: 
       ```c++
       typedef TArray<FMytype> FArrayOfMyTypes;
@@ -67,11 +68,11 @@ Variable, method, and class names should be clear, unambiguous, and descriptive.
 
 All variables should be declared one at a time, so that a comment on the meaning of the variable can be provided. Also, the JavaDocs style requires it. You can use multi-line or single line comments before a variable, and the blank line is optional for grouping variables.
 
-All functions that return a bool should ask a true/false question, such as IsVisible() or ShouldClearBuffer().
+All functions that return a bool should ask a true/false question, such as `IsVisible()` or `ShouldClearBuffer()`.
 
-Though not required, we encourage you to prefix function parameter names with "Out" if they are passed by reference, and the function is expected to write to that value. This makes it obvious that the value passed in this argument will be replaced by the function.
+Though not required, we encourage you to prefix function parameter names with `Out` if they are passed by reference, and the function is expected to write to that value. This makes it obvious that the value passed in this argument will be replaced by the function.
 
-If an In or Out parameter is also a boolean, put the "b" before the In/Out prefix, such as bOutResult.
+If an In or Out parameter is also a boolean, put the `b` before the `In/Out` prefix, such as `bOutResult`.
 
 Functions that return a value should describe the return value. The name should make clear what value the function will return. This is particularly important for boolean functions. Consider the following two example methods:
 ```c++
@@ -117,18 +118,19 @@ When there is a choice between a standard library feature instead of our own, pr
 
 Avoid mixing UE idioms and standard library idioms in the same API.
 
-- ***<atomic>:*** should be used in new code and old migrated when touched. Atomics are expected to be implemented fully and efficiently on all supported platforms. Our own TAtomic is only partially implemented, and it isn't in our interest to maintain and improve it.
-- ***<type_traits>:*** should be used where there's overlap between a legacy UE trait and a standard trait. Traits are often implemented as compiler intrinsics for correctness, and compilers can have knowledge of the standard traits and select faster compilation paths instead of treating them as plain C++. One concern is that our traits typically have an upper case Value static or Type typedef, whereas standard traits are expected to use value and type. This is an important distinction, as a particular syntax is expected by compositional traits, e.g. std::conjunction. New traits we add should be written with lower case value or type to support composition, and existing traits should be updated to support either case.
-- ***<initializer_list>:*** must be used to support braced initializer syntax. This is a case where the language and the standard libraries overlap, and there is no alternative if you want to support it.
-- ***<regex>:*** may be used directly, but its use should be encapsulated within editor-only code. We have no plans to implement our own regex solution.
-- ***<limits>:*** std::numeric_limits can be used in its entirety.
-- ***<cmath>:*** only the floating point comparison functions from this header may be used, as listed here.
+- `<atomic>:` should be used in new code and old migrated when touched. Atomics are expected to be implemented fully and efficiently on all supported platforms. Our own `TAtomic` is only partially implemented, and it isn't in our interest to maintain and improve it.
+- `<type_traits>:` should be used where there's overlap between a legacy UE trait and a standard trait. Traits are often implemented as compiler intrinsics for correctness, and compilers can have knowledge of the standard traits and select faster compilation paths instead of treating them as plain C++. One concern is that our traits typically have an upper case Value static or Type typedef, whereas standard traits are expected to use value and type. This is an important distinction, as a particular syntax is expected by compositional traits, e.g. std::conjunction. New traits we add should be written with lower case value or type to support composition, and existing traits should be updated to support either case.
+- `<initializer_list>:` must be used to support braced initializer syntax. This is a case where the language and the standard libraries overlap, and there is no alternative if you want to support it.
+- `<regex>:` may be used directly, but its use should be encapsulated within editor-only code. We have no plans to implement our own regex solution.
+- `<limits>:` std::numeric_limits can be used in its entirety.
+- `<cmath>:` only the floating point comparison functions from this header may be used, as listed here.
 - Standard containers and strings should be avoided except in interop code.
 
 # Comments
 Comments are communication and communication is vital. The following sections detail some things to keep in mind about comments (from Kernighan & Pike The Practice of Programming).
 ### Guidelines
-- Write self-documenting code:
+- **Write self-documenting code**:
+
 ```c++
 // Bad:
 t = s + l - b;
@@ -137,7 +139,8 @@ t = s + l - b;
 TotalLeaves = SmallLeaves + LargeLeaves - SmallAndLargeLeaves;
 ```
 
-- Write useful comments:
+- **Write useful comments**:
+
 ```c++
 // Bad:
 // increment Leaves
@@ -148,7 +151,8 @@ TotalLeaves = SmallLeaves + LargeLeaves - SmallAndLargeLeaves;
 ++Leaves;
 ```
 
-- Do not comment bad code - rewrite it:
+- **Do not comment bad code - rewrite it**:
+
 ```c++
 // Bad:
 // total number of leaves is sum of
@@ -160,7 +164,8 @@ t = s + l - b;
 TotalLeaves = SmallLeaves + LargeLeaves - SmallAndLargeLeaves;
 ```
 
-- Do not contradict the code:
+- **Do not contradict the code**:
+
 ```c++
 // Bad:
 // never increment Leaves!
@@ -176,7 +181,9 @@ Const is documentation as much as it is a compiler directive, so all code should
 - Passing function arguments by const pointer or reference if those arguments are not intended to be modified by the function,
 - Flagging methods as const if they do not modify the object,
 - and using const iteration over containers if the loop isn't intended to modify the container.
-Example:
+
+For example:
+
 ```c++
 void SomeMutatingOperation(FThing& OutResult, const TArray<Int32>& InArray)
 {
@@ -195,7 +202,9 @@ for (const FString& : StringArray)
 }
 ```
 
-Const should also be preferred on by-value function parameters and locals. This tells a reader that the variable will not be modified in the body of the function, which makes it easier to understand. If you do this, make sure that the declaration and the definition match, as this can affect the JavaDoc process. Example:
+Const should also be preferred on by-value function parameters and locals. This tells a reader that the variable will not be modified in the body of the function, which makes it easier to understand. If you do this, make sure that the declaration and the definition match, as this can affect the JavaDoc process. 
+
+For example:
 ```c++
 void FBlah::SetMemberArray(TArray<FString> InNewArray)
 {
@@ -203,7 +212,9 @@ void FBlah::SetMemberArray(TArray<FString> InNewArray)
 }
 ```
 
-Put the const keyword on the end when making a pointer itself const (rather than what it points to). References can't be "reassigned" anyway, and so can't be made const in the same way. Example: 
+Put the const keyword on the end when making a pointer itself const (rather than what it points to). References can't be "reassigned" anyway, and so can't be made const in the same way. 
+
+For example: 
 ```c++
 // Const pointer to non-const object - pointer cannot be reassigned, but T can still be modified
 T* const Ptr = ...;
@@ -212,7 +223,9 @@ T* const Ptr = ...;
 T& const Ref = ...;
 ```
 
-Never use const on a return type, as this inhibits move semantics for complex types, and will give compile warnings for built-in types. This rule only applies to the return type itself, not the target type of a pointer or reference being returned. Example:
+Never use const on a return type, as this inhibits move semantics for complex types, and will give compile warnings for built-in types. This rule only applies to the return type itself, not the target type of a pointer or reference being returned. 
+
+For example:
 ```c++
 // Bad - returning a const array
 const TArray<FString> GetSomeArray();
@@ -336,10 +349,10 @@ You shouldn't use auto in C++ code, although a few exceptions are listed below. 
 * In template code, where the type of an expression cannot easily be discerned. This is an advanced case.
 It's very important that types are clearly visible to someone who is reading the code. Even though some IDEs are able to infer the type, doing so relies on the code being in a compilable state. It also won't assist users of merge/diff tools, or when viewing individual source files in isolation, such as on GitHub.
 
-If you're sure you are using auto in an acceptable way, always remember to correctly use const, & or * just like you would with the type name. With `auto`, this will coerce the inferred type to be what you want.
+If you're sure you are using auto in an acceptable way, always remember to correctly use const, `&` or `*` just like you would with the type name. With `auto`, this will coerce the inferred type to be what you want.
 
 ### Range-Based for
-This is preferred to keep the code easier to understand and more maintainable. When you migrate code that uses old TMap iterators, be aware that the old Key() and Value() functions, which were methods of the iterator type, are now simply Key and Value fields of the underlying key-value TPair. Example:
+This is preferred to keep the code easier to understand and more maintainable. When you migrate code that uses old TMap iterators, be aware that the old `Key()` and `Value()` functions, which were methods of the iterator type, are now simply Key and Value fields of the underlying key-value `TPair`. Example:
 ```c++
 TMap<FString, int32> MyMap;
 
@@ -384,10 +397,10 @@ Algo::Sort(ArrayOfThings, [](const Thing& Lhs, const Thing& Rhs){ return Lhs.Get
 Be aware that stateful lambdas can't be assigned to function pointers, which we tend to use a lot.
 
 Non-trivial lambdas should be documented in the same manneras regular functions. Don't be afraid to split them over a few more lines in order to include comments.
-Explicit captures should be used rather than automatic capture ([&amp;] and [=]). This is important for readability, maintainability and performance reasons, particularly when used with large lambdas and deferred execution. It declares the intent of the author and so mistakes can more easily be caught during code review. Incorrect captures can have negative consequences which are more likely to become a problem as the code is maintained over time.
+Explicit captures should be used rather than automatic capture (`[&]` and `[=]`). This is important for readability, maintainability and performance reasons, particularly when used with large lambdas and deferred execution. It declares the intent of the author and so mistakes can more easily be caught during code review. Incorrect captures can have negative consequences which are more likely to become a problem as the code is maintained over time.
 - By-reference capture and by-value capture of pointers (including the this pointer) can cause accidental dangling references, if execution of the lambda is deferred.
 - By-value capture can be a performance concern if it makes unnecessary copies for a non-deferred lambda.
-- Accidentally captured UObject pointers are invisible to the garbage collector.Automatic capture captures this implicitly if any member variables are referenced, even though [=] gives the impression of the lambda having its own copies of everything.
+- Accidentally captured UObject pointers are invisible to the garbage collector.Automatic capture captures this implicitly if any member variables are referenced, even though `[=]` gives the impression of the lambda having its own copies of everything.
 
 Explicit return types should be used for large lambdas, or when you are returning the result of another function call. These should be considered in the same way as the auto keyword:
 ```c++
@@ -432,7 +445,7 @@ enum class EThing : uint8
 }
 ```
 
-These are also supported as UPROPERTYs, and replace the old TEnumAsByte<> workaround. However, enums exposed to Blueprints must continue to be based on uint8. Enum properties can also be any size, not just bytes:
+These are also supported as UPROPERTYs, and replace the old `TEnumAsByte<>` workaround. However, enums exposed to Blueprints must continue to be based on uint8. Enum properties can also be any size, not just bytes:
 ```c++
 // Old property
 UPROPERTY()
@@ -443,7 +456,7 @@ UPROPERTY()
 EThing MyProperty;
 ```
 
-Enum classes used as flags can take advantage of the ENUM_CLASS_FLAGS(EnumType) macro to automatically define all of the bitwise operators:
+Enum classes used as flags can take advantage of the `ENUM_CLASS_FLAGS(EnumType)` macro to automatically define all of the bitwise operators:
 ```c++
 enum class EFlags
 {
@@ -466,7 +479,7 @@ if ((Flags & EFlags::Flag1) != EFlags::None)
 ```
 
 ### Move Semantics
-All of the main container types - TArray, TMap, TSet, FString - have move constructors and move assignment operators. These are often used automatically when passing/returning these types by value, but can be explicitly invoked by using MoveTemp, which is UE's equivalent of std::move.
+All of the main container types - `TArray`, `TMap`, `TSet`, `FString` - have move constructors and move assignment operators. These are often used automatically when passing/returning these types by value, but can be explicitly invoked by using MoveTemp, which is UE's equivalent of `std::move`.
 
 Returning containers or strings by value can be a win for expressivity, without the usual cost of temporary copies. Rules around pass-by-value and use of MoveTemp are still being established, but can already be found in some optimized areas of the codebase.
 
@@ -523,7 +536,7 @@ Any third party code included in the engine should be marked with comments forma
 
 # Code Formatting
 ### Braces
-Brace wars are foul. Epic has a long standing usage pattern of putting braces on a new line. Please adhere to that usage. Always include braces in single-statement blocks. For example.:
+Brace wars are foul. Epic has a long standing usage pattern of putting braces on a new line. Please adhere to that usage. Always include braces in single-statement blocks. For example:
 ```c++
 if (bThing)
 {
@@ -598,32 +611,32 @@ switch (condition)
 # Namespaces
 You can use namespaces to organize your classes, functions and variables where appropriate. If you do use them, follow the rules below.
 * Most UE code is currently not wrapped in a global namespace. Be careful to avoid collisions in the global scope, especially when using or including third party code.
-* Namespaces are not supported by UnrealHeaderTool, so they should not be used when defining UCLASSes, USTRUCTs and so on.
-* New APIs which aren't UCLASSes, USTRUCTs etc, should be placed in a UE:: namespace at least, and ideally a nested namespace, e.g. UE::Audio::. Namespaces which are used to hold implementation details which are not part of the public-facing API should go in a Private namespace, e.g. UE::Audio::Private::.
+* Namespaces are not supported by UnrealHeaderTool, so they should not be used when defining `UCLASSes`, `USTRUCTs` and so on.
+* New APIs which aren't `UCLASSes`, `USTRUCTs` etc, should be placed in a `UE::` namespace at least, and ideally a nested namespace, e.g. `UE::Audio::`. Namespaces which are used to hold implementation details which are not part of the public-facing API should go in a Private namespace, e.g. `UE::Audio::Private::`.
 * Using declarations:
-  * Do not put using declarations in the global scope, even in a .cpp file (it will cause problems with our "unity" build system.)
+  * Do not put using declarations in the global scope, even in a `.cpp` file (it will cause problems with our "unity" build system.)
   * It's okay to put using declarations within another namespace, or within a function body.
   * If you put using declarations within a namespace, this will carry over to other occurrences of that namespace in the same translation unit. As long as you are consistent, it will be fine.
   * You can only use using declarations in header files safely if you follow the above rules.
 * Note that forward-declared types need to be declared within their respective namespace. If you don't do this, you will get link errors.
 * If you declare a lot of classes/types within a namespace, it can be difficult to use those types in other global-scoped classes (for example, function signatures will need to use explicit namespace when appearing in class declarations).
-* You can use using declarations to only alias specific variables within a namespace into your scope (for example, using Foo::FBar). However, we don't usually do that in Unreal code.
-* Macros cannot live in a namespace, but should be prefixed with UE_ instead, e.g. UE_LOG.
+* You can use using declarations to only alias specific variables within a namespace into your scope (for example, using `Foo::FBar`). However, we don't usually do that in Unreal code.
+* Macros cannot live in a namespace, but should be prefixed with `UE_` instead, e.g. `UE_LOG`.
 
 # Physical Dependencies
-* File names should not be prefixed where possible; for example, Scene.cpp instead of UScene.cpp. This makes it easy to use tools like Workspace Whiz, or Visual Assist's Open File in Solution, by reducing the number of letters needed to identify the file you want.
+* File names should not be prefixed where possible; for example, `Scene.cpp` instead of `UScene.cpp`. This makes it easy to use tools like Workspace Whiz, or Visual Assist's Open File in Solution, by reducing the number of letters needed to identify the file you want.
 * All headers should protect against multiple includes with the #pragma once directive. Note that all compilers we use support #pragma once.
 * In general, try to minimize physical coupling. In particular, avoid including standard library headers from other headers.
 * If you can use forward declarations instead of including a header, do so.
-* When including, be as fine grained as possible. For example, do not include Core.h--include the specific headers in Core that you need definitions from.
+* When including, be as fine grained as possible. For example, do not include `Core.h` - include the specific headers in Core that you need definitions from.
 * Try to include every header you need directly, to make fine-grained inclusion easier.
 * Don't rely on a header that is included indirectly by another header you include.
 * Don't rely on being included through another header. Include everything you need.
-* Modules have Private and Public source directories. Any definitions that are needed by other modules must be in headers in the Public directory. Everything else should be in the Private directory. Note that in older Unreal modules, these directories may still be called "Src" and "Inc", but those directories are meant to separate private and public code in the same way, and are not meant to separate header files from source files.
+* Modules have `Private` and `Public` source directories. Any definitions that are needed by other modules must be in headers in the Public directory. Everything else should be in the Private directory. Note that in older Unreal modules, these directories may still be called `Src` and `Inc`, but those directories are meant to separate private and public code in the same way, and are not meant to separate header files from source files.
 * Don't worry about setting up your headers for precompiled header generation. UnrealBuildTool can do a better job of this than you can.
 * Split up large functions into logical sub-functions. One area of compilers' optimizations is the elimination of common subexpressions. The bigger your functions are, the more work the compiler has to do to identity them. This leads to greatly inflated build times.
 * Don't use too many inline functions, because they force rebuilds even in files which don't use them. Inline functions should only be used for trivial accessors and when profiling shows there is a benefit to doing so.
-* Be even more conservative in the use of FORCEINLINE. All code and local variables will be expanded out into the calling function, and this will cause the same build time problems caused by large functions.
+* Be even more conservative in the use of `FORCEINLINE`. All code and local variables will be expanded out into the calling function, and this will cause the same build time problems caused by large functions.
 
 # Encapsulation
 - Enforce encapsulation with the protection keywords. Class members should almost always be declared private unless they are part of the public/protected interface to the class. Use your best judgment, but always be aware that a lack of accessors makes it hard to refactor later without breaking plugins and existing projects.
@@ -637,7 +650,7 @@ You can use namespaces to organize your classes, functions and variables where a
 - Address compiler warnings. Compiler warning messages mean something is wrong. Fix what the compiler is warning you about. If you absolutely can't address it, use #pragma to suppress the warning, but this should only be done as a last resort.
 - Leave a blank line at the end of the file. All .cpp and .h files should include a blank line, to coordinate with gcc.
 - Debug code should either be generally useful and polished, or not checked in. Debug code that is intermixed with other code makes the other code harder to read.
-- Always use the TEXT() macro around string literals. Without it, code that constructs FStrings from literals will cause an undesirable string conversion process.
+- Always use the `TEXT()` macro around string literals. Without it, code that constructs FStrings from literals will cause an undesirable string conversion process.
 - Avoid repeating the same operation redundantly in loops. Move common subexpressions out of loops to avoid redundant calculations. Make use of statics in some cases, to avoid globally-redundant operations across function calls, such as constructing an FName from a string literal.
 - Be mindful of hot reload. Minimize dependencies to cut down on iteration time. Don't use inlining or templates for functions which are likely to change over a reload. Only use statics for things which are expected to remain constant over a reload.
 - Use intermediate variables to simplify complicated expressions. If you have a complicated expression, it can be easier to understand if you split it into sub-expressions, that are assigned to intermediate variables, with names describing the meaning of the sub-expression within the parent expression. For example:
@@ -649,7 +662,9 @@ You can use namespaces to organize your classes, functions and variables where a
       DoSomething();
   }
   ```
+  
   should be replaced with:
+  
   ```c++
   const bool bIsLegalWindow = Blah->BlahP->WindowExists->Etc && Stuff;
   const bool bIsPlayerDead = bPlayerExists && bGameStarted && bPlayerStillHasPawn && IsTuesday();
@@ -660,10 +675,13 @@ You can use namespaces to organize your classes, functions and variables where a
   ```
 - Pointers and references should only have one space, which is to the right of the pointer or reference. This makes it easy to quickly use Find in Files for all pointers or references to a certain type.
 - Use this:
+
   ```c++
   FShaderType* Ptr
   ```
+  
   Not these:
+  
   ```c++
   FShaderType *Ptr
   FShaderType * Ptr
@@ -720,7 +738,7 @@ You can use namespaces to organize your classes, functions and variables where a
   FCup* Cup = MakeCupOfTea(Tea, ETeaFlags::Milk | ETeaFlags::Honey);
   ```
   This form prevents the accidental transposing of flags, avoids accidental conversion from pointer and integer arguments, removes the need to repeat redundant defaults, and is more efficient. 
-  It is acceptable to use bools as arguments when they are the complete state to be passed to a function like a setter, such as void FWidget::SetEnabled(bool bEnabled). Though consider refactoring if this changes.
+  It is acceptable to use bools as arguments when they are the complete state to be passed to a function like a setter, such as void `FWidget::SetEnabled(bool bEnabled)`. Though consider refactoring if this changes.
 - Avoid overly-long function parameter lists. If a function takes many parameters then consider passing a dedicated struct instead:
   ```c++
   // Old style
@@ -744,7 +762,7 @@ You can use namespaces to organize your classes, functions and variables where a
   
   Func(TEXT("String")); // Calls the bool overload!
   ```
-- Interface classes (prefixed with "I") should always be abstract, and must not have member variables. Interfaces are allowed to contain methods that are not pure-virtual, and can even contain methods that are non-virtual or static, as long as they are implemented inline.
+- Interface classes (prefixed with `I`) should always be abstract, and must not have member variables. Interfaces are allowed to contain methods that are not pure-virtual, and can even contain methods that are non-virtual or static, as long as they are implemented inline.
 - Use the virtual and override keywords when declaring an overriding method. When declaring a virtual function in a derived class, that overrides a virtual function in the parent class, you must use both the virtual and the override keywords. For example:
   ```c++
   class A
@@ -766,9 +784,9 @@ Platform-specific code should always be abstracted and implemented in platform-s
 ```c++
 Source/Runtime/Core/Private/[PLATFORM]/[PLATFORM]Memory.cpp
 ```
-In general, you should avoid adding any uses of PLATFORM_[`PLATFORM`] (e.g PLATFORM_XBOXONE) to code outside of a directory named [PLATFORM].
+In general, you should avoid adding any uses of `PLATFORM_[`PLATFORM`]` (e.g `PLATFORM_XBOXONE`) to code outside of a directory named [PLATFORM].
 
-Instead, extend the hardware abstraction layer to add a static function, e.g. in FPlatformMisc:
+Instead, extend the hardware abstraction layer to add a static function, e.g. in `FPlatformMisc`:
 ```c++
 FORCEINLINE static int32 GetMaxPathLength()
 {
@@ -777,16 +795,16 @@ FORCEINLINE static int32 GetMaxPathLength()
 ```
 Platforms can then override this function, returning either a platform-specific constant value or even using platform APIs to determine the result.
 
-In cases where a define is absolutely necessary, create new #defines that describe particular properties that can apply to a platform, for example PLATFORM_USE_PTHREADS. Set the default value in Platform.h and override for any platforms which require it in the platform-specific Platform.h file.
+In cases where a define is absolutely necessary, create new #defines that describe particular properties that can apply to a platform, for example `PLATFORM_USE_PTHREADS`. Set the default value in `Platform.h` and override for any platforms which require it in the platform-specific Platform.h file.
 
-For example, in Platform.h we have:
+For example, in `Platform.h` we have:
 ```c++
 #ifndef PLATFORM_USE_PTHREADS 
     #define PLATFORM_USE_PTHREADS 1
 #endif
 ```
 
-Windows/WindowsPlatform.h has:
+`Windows/WindowsPlatform.h` has:
 ```c++
 #define PLATFORM_USE_PTHREADS 0
 ```
@@ -801,5 +819,5 @@ Reasoning: centralizing the platform-specific details of the engine allow for su
 
 Keeping platform code in platform-specific folders is also a requirement for NDA platforms such as PS4, XboxOne and Nintendo Switch.
 
-It is important to ensure the code compiles and runs regardless of whether the [PLATFORM] subdirectory is present. In other words, cross platform code should never be dependent on platform-specific code.
+It is important to ensure the code compiles and runs regardless of whether the `[PLATFORM]` subdirectory is present. In other words, cross platform code should never be dependent on platform-specific code.
 
