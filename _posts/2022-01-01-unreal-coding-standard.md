@@ -3,7 +3,7 @@ title: Unreal Engine — Coding Standard
 date: 2022-03-31 11:58:47 +07:00
 ---
 
-**Sources:** https://docs.unrealengine.com/en-US/ProductionPipelines/DevelopmentSetup/CodingStandard/index.html
+**Links:** https://docs.unrealengine.com/en-US/ProductionPipelines/DevelopmentSetup/CodingStandard/index.html
 
 - [Copyright Notice](#copyright-notice)
 - [Naming Conventions](#naming-conventions)

@@ -179,3 +179,104 @@ https://msdn.microsoft.com/library/355f120c-2847-4608-ac04-8dda18ffe10c
 To keep compatibility with other compilers (like clang for Linux and Mac), UE4 needs to have macro that gonna place other-compiler equivalent or just fallback to standard inline.
 
 From: https://answers.unrealengine.com/questions/852234/what-is-forceinline-macro.html
+
+
+# Property helpers
+
+## FindArrayPropertyInObject
+```c++
+FORCEINLINE void FindArrayPropertyInObject(UObject* Object, FName FieldName)
+{
+	if (IsValid(Object))
+	{
+		/** TPropertyValueIterator
+		* Class for iterating through all fields in UStruct.
+		* Return field with value data
+		*/
+		for (TPropertyValueIterator<UProperty> It(Object->GetClass(), Object); It; ++It)
+		{
+			if (Cast<UArrayProperty>(It.Key()) && IsValid(It.Key()) && It.Key()->GetFName() == FieldName)
+			{
+				void* ArrayPtr = (void*)It.Value();
+				TArray<UObject*>* Array = (TArray<UObject*>*)ArrayPtr;
+
+				if (Array)
+				{
+					for (UObject* Element : *Array)
+					{
+						GEngine->AddOnScreenDebugMessage(-1, 10000.0f, FColor::Red, Element->GetFName().ToString());
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+## IsBlueprintableClass
+```c++
+FORCEINLINE bool IsBlueprintableClass(UStruct* Struct)
+{
+	if (IsValid(Struct) && Cast<UBlueprintGeneratedClass>(Struct))
+	{
+		return true;
+	}
+
+	return false;
+}
+```
+
+## PropertyValueIterator
+```c++
+FORCEINLINE void PropertyValueIterator(UObject* Object)
+{
+	if (IsValid(Object))
+	{
+		/** TPropertyValueIterator
+		* Class for iterating through all fields in UStruct.
+		* Return field with value data
+		*/
+		for (TPropertyValueIterator<UProperty> It(Object->GetClass(), Object); It; ++It)
+		{
+		    GEngine->AddOnScreenDebugMessage(-1, 10000.0f, FColor::Red, It.Key()->GetFName().ToString());
+		}
+	}
+}
+```
+
+## ObjectIterator
+```c++
+template<typename T>
+FORCEINLINE void ObjectIterator()
+{
+	/** TObjectIterator
+	* Class for iterating through all objects created in world
+	* which inherit from a specified base class.  
+	* Does not include any class default objects.
+	* Note that when Playing In Editor, this will find objects in the
+	* editor as well as the PIE world, in an indeterminate order.
+	*/
+	for (TObjectIterator<AActor> It; It; ++It)
+	{
+        	GEngine->AddOnScreenDebugMessage(-1, 10000.0f, FColor::Red, It->GetFName().ToString());
+	}
+}
+```
+
+## FieldIterator
+```c++
+FORCEINLINE void FieldIterator(UStruct* Struct)
+{
+	if (IsValid(Struct))
+	{
+        	/** TFieldIterator
+		* Class for iterating through all fields in UStruct.
+		* Return field data
+        	*/
+    		for (TFieldIterator<UProperty> It(Struct); It; ++It)
+    		{
+    			GEngine->AddOnScreenDebugMessage(-1, 10000.0f, FColor::Red, It->GetFName().ToString());
+		}
+	}
+}
+```

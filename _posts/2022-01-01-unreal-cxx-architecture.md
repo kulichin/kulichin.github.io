@@ -36,9 +36,11 @@ Mostly referred to as "FOn_..."
 - **DECLARE_MULTICAST_DELEGATE** - C++ only just like standard delegate but multiple functions can bind to it an be called all at once using Broadcast function.
 - **DECLARE_DYNAMIC_MULTICAST_DELEGATE** - C++/BP. It's like a multicast delegate, but it is serializable and can be bindable from blueprints when you use BlueprintAssignable keyword in UPROPERTY.
 
-**Under the hood:** https://www.programmersought.com/article/8873853019/
-
-**From:** https://stackoverflow.com/questions/62165120/c-equivalent-blueprint-event-dispatcher-vs-blueprint-events
+**Links: ** 
+https://stackoverflow.com/questions/62165120/c-equivalent-blueprint-event-dispatcher-vs-blueprint-events
+https://www.programmersought.com/article/8873853019/
+https://docs.unrealengine.com/en-US/API/Runtime/Core/Misc/FCoreDelegates/index.html
+https://ikrima.dev/ue4guide/gameplay-programming/master-engine-flow/core-eventsdelegates/
 
 # World context object
 If you want to use a static BP node anywhere in the game code, but your C++ function wants to modify the state of the game world by creating objects or actors, or performing an action on any instanced data within the game world, then you can pass along a World Context Object.
