@@ -21,7 +21,14 @@ It exposes any public properties or functions of our class: `[YourModuleName]_AP
 # Privare/Public Dependency
 Private dependencies are preferred as they reduce compile times. Forward declare when you can.
 
-Missing module dependencies will produce compiler or linker errors.
+ModuleRules class:
+```c++
+/// List of public dependency module names. These are modules that are required by our public source files.
+public List<string> PublicDependencyModuleNames = new List<string>();
+    
+/// List of private dependency module names. These are modules that our private code depends on but nothing in our public include files depend on.
+public List<string> PrivateDependencyModuleNames = new List<string>();
+```
 
 # Precompiled Headers
 PCH define one header file that includes your most common header files and gets compiled before other files. It doesn't compile again, unless any of it's included headers are changed.
